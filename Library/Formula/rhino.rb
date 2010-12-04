@@ -13,9 +13,9 @@ class Rhino <Formula
     libdir=File.join(prefix,"libexec")
     sharedir=File.join(prefix,"share","rhino")
     [bindir,libdir,sharedir].each{|d| File.directory?(d) or File.makedirs(d)}
-    fcontent=%Q{#!/bin/sh\njava -jar #{libdir}/js.jar}
-     File.open(File.join(bindir,"rhino"),'w'){|f|f.write(fcontent)}
-     File.chmod(0755,File.join(bindir,"rhino"))
+    fcontent=%Q{#!/bin/sh\njava -jar #{libdir}/js.jar \$\*}
+    File.open(File.join(bindir,"rhino"),'w'){|f|f.write(fcontent)}
+    File.chmod(0755,File.join(bindir,"rhino"))
 
     %w{js.jar js-14.jar}.each{|jar| File.copy(jar,File.join(libdir,jar))}
     cp_r("javadoc/",sharedir)
